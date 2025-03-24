@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "./Components/Navbar";
-import Cards from "./Components/cards";
+import Cards from "./Components/Cards";
 
 function App() {
   const [favourites, setFavourites] = useState([]);
