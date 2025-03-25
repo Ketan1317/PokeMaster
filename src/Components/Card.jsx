@@ -56,11 +56,11 @@ const Card = ({ info, favourites, setFavourites }) => {
 
           <div className="flex items-center justify-center gap-4 mt-4">
             <div className="flex items-center bg-blue-500 px-3 py-1 rounded-full gap-2">
-              <GiBodyHeight size={20} className="text-amber-500" />
+              <GiBodyHeight size={20} className="text-amber-500 animate-pulse" />
               <span className="font-semibold">Height: {info.data.height}</span>
             </div>
             <div className="flex items-center bg-blue-500 px-3 py-1 rounded-full gap-2">
-              <FaWeightHanging size={20} className="text-amber-500" />
+              <FaWeightHanging size={20} className="text-amber-500 animate-pulse" />
               <span className="font-semibold">Weight: {info.data.weight}</span>
             </div>
           </div>

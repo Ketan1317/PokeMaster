@@ -8,7 +8,6 @@ const Cards = ({ favourites,search, setFavourites }) => {
   const fetchData = async () => {
     try {
       const res = await GlobalAPI.getData(); 
-      console.log("API Response:", res);
 
       const resultArray = res.data.results;
 
@@ -28,8 +27,7 @@ const Cards = ({ favourites,search, setFavourites }) => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const filteredData = data.filter((item) => item.data.name.includes(search))
+  const filteredData = data.filter((item) => item.data.name.includes(search));
 
   return (
     <div className="mt-14 flex items-center justify-center gap-12 flex-wrap">
