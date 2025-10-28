@@ -14,9 +14,7 @@ const Card = ({ info, favourites, setFavourites }) => {
   const defenceStat =
     info.data.stats.find((stat) => stat.stat.name === "defense")?.base_stat || 0;
 
-  const isFav = () => {
-    return favourites.some((fav) => fav.data.name === info.data.name);
-  };
+  const isFav = () => favourites.some((fav) => fav.data.name === info.data.name);
 
   const handleFav = () => {
     if (isFav()) {
@@ -29,73 +27,92 @@ const Card = ({ info, favourites, setFavourites }) => {
     } else {
       setFavourites([...favourites, info]);
       setPingEffect(true);
-      setTimeout(() => setPingEffect(false), 500); 
+      setTimeout(() => setPingEffect(false), 500);
     }
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-4">
+    <div className="flex flex-col justify-center items-center p-4 group">
       <div
-        className={`relative text-white border-2 border-amber-50 ${
-          bounce ? "animate-bounce duration-500 ease-in-out" : ""
-        } w-72 h-96 rounded-2xl bg-zinc-800 shadow-lg overflow-hidden ${
-          pingEffect ? "animate-ping duration-500 ease-in-out" : ""
-        }`}
+        className={`relative w-80 h-[460px] rounded-3xl overflow-hidden shadow-2xl border border-white/20 backdrop-blur-md bg-white/10 text-white transform transition-all duration-500 hover:scale-105 hover:shadow-cyan-500/40 ${
+          bounce ? "animate-bounce" : ""
+        } ${pingEffect ? "animate-ping" : ""}`}
       >
-        {/* Frontside */}
-        <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-start p-4">
-          <div className="w-full h-32 flex items-center justify-center bg-gradient-to-r from-black via-zinc-800 to-gray-500 rounded-t-2xl">
-            <img
-              src={info.data.sprites.other.dream_world.front_default}
-              className="w-24 animate-pulse"
-              alt="Pokémon Logo"
-            />
-          </div>
-
-          <h1 className="font-bold text-2xl mt-4">{info.data.name}</h1>
-
-          <div className="flex items-center justify-center gap-4 mt-4">
-            <div className="flex items-center bg-blue-500 px-3 py-1 rounded-full gap-2">
-              <GiBodyHeight size={20} className="text-amber-500 animate-pulse" />
-              <span className="font-semibold">Height: {info.data.height}</span>
-            </div>
-            <div className="flex items-center bg-blue-500 px-3 py-1 rounded-full gap-2">
-              <FaWeightHanging size={20} className="text-amber-500 animate-pulse" />
-              <span className="font-semibold">Weight: {info.data.weight}</span>
-            </div>
-          </div>
-
-          <h2 className="text-xl font-semibold mt-5">
-            Type: {info.data.types.map((item) => item.type.name).join(", ")}
-          </h2>
+        {/* Pokémon Image Section */}
+        <div className="h-40 bg-gradient-to-r from-zinc-900 via-gray-800 to-gray-700 flex items-center justify-center rounded-t-3xl">
+          <img
+            src={info.data.sprites.other.dream_world.front_default}
+            alt="Pokémon"
+            className="w-28 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-transform duration-500 group-hover:scale-110"
+          />
         </div>
 
-        {/* Backside */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-0 hover:opacity-100 bg-black bg-opacity-75 transition duration-500 ease-in-out flex flex-col items-center justify-center">
-          <div className="flex items-center mt-4 justify-center gap-2 px-1 py-2 bg-amber-700 rounded-2xl">
-            <GrVulnerability className="text-yellow-400" />
-            <h1 className="font-semibold text-s">
-              Abilities:{" "}
-              {info.data.abilities.map((item) => item.ability.name).join(", ")}
-            </h1>
-          </div>
-          <h1 className="font-semibold text-xl mt-4">
-            Experience: {info.data.base_experience}
+        {/* Pokémon Info */}
+        <div className="p-5 flex flex-col items-center">
+          <h1 className="text-2xl capitalize font-bold text-cyan-300 drop-shadow-sm">
+            {info.data.name}
           </h1>
-          <div className="m-4 px-4 py-3 bg-amber-700 rounded-2xl">
-            <h1 className="font-semibold text-xl mt-1">Speed: {speedStat}</h1>
-            <h1 className="font-semibold text-xl mt-1">Attack: {attackStat}</h1>
-            <h1 className="font-semibold text-xl mt-1">
-              Defense: {defenceStat}
-            </h1>
+
+          <div className="flex gap-3 mt-4">
+            <div className="flex items-center gap-2 bg-gradient-to-r from-cyan-700 to-blue-600 px-3 py-1 rounded-full text-sm font-medium">
+              <GiBodyHeight size={18} className="text-amber-300" />
+              <span>Height: {info.data.height}</span>
+            </div>
+
+            <div className="flex items-center gap-2 bg-gradient-to-r from-cyan-700 to-blue-600 px-3 py-1 rounded-full text-sm font-medium">
+              <FaWeightHanging size={18} className="text-amber-300" />
+              <span>Weight: {info.data.weight}</span>
+            </div>
           </div>
+
+          <p className="mt-4 text-base text-gray-200 font-medium">
+            Type:{" "}
+            <span className="text-cyan-400 font-semibold">
+              {info.data.types.map((t) => t.type.name).join(", ")}
+            </span>
+          </p>
+
+          {/* Divider */}
+          <div className="w-full h-[1px] bg-white/20 my-4"></div>
+
+          {/* Stats Section */}
+          <div className="grid grid-cols-3 gap-3 text-center w-full">
+            <div className="bg-white/10 rounded-xl p-2 backdrop-blur-md">
+              <h2 className="text-sm font-semibold text-gray-300">Speed</h2>
+              <p className="text-lg font-bold text-cyan-400">{speedStat}</p>
+            </div>
+            <div className="bg-white/10 rounded-xl p-2 backdrop-blur-md">
+              <h2 className="text-sm font-semibold text-gray-300">Attack</h2>
+              <p className="text-lg font-bold text-cyan-400">{attackStat}</p>
+            </div>
+            <div className="bg-white/10 rounded-xl p-2 backdrop-blur-md">
+              <h2 className="text-sm font-semibold text-gray-300">Defense</h2>
+              <p className="text-lg font-bold text-cyan-400">{defenceStat}</p>
+            </div>
+          </div>
+
+          {/* Abilities */}
+          <div className="mt-5 bg-gradient-to-r from-amber-600 to-amber-700 px-4 py-2 rounded-xl flex items-center gap-2">
+            <GrVulnerability className="text-yellow-300" />
+            <span className="text-sm font-medium">
+              {info.data.abilities.map((a) => a.ability.name).join(", ")}
+            </span>
+          </div>
+
+          {/* XP */}
+          <p className="mt-3 text-gray-200 text-sm font-semibold">
+            Base XP: <span className="text-cyan-400">{info.data.base_experience}</span>
+          </p>
         </div>
       </div>
 
+      {/* Favourite Button */}
       <button
         onClick={handleFav}
-        className={`mt-4 px-4 py-2 font-semibold text-xl cursor-pointer rounded-md transition duration-300 ease-in-out ${
-          isFav() ? "bg-green-500 hover:bg-green-700 hover:scale-110 transition duration-500 ease-in" : "bg-red-500 hover:bg-red-700 hover:scale-110 transition duration-500 ease-in"
+        className={`mt-5 px-6 py-2 rounded-full text-lg font-semibold transition-all duration-300 shadow-lg ${
+          isFav()
+            ? "bg-green-500 hover:bg-green-600 text-white"
+            : "bg-red-500 hover:bg-red-600 text-white"
         }`}
       >
         {isFav() ? "Remove from Favourites" : "Add to Favourites"}
