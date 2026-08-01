@@ -1,4 +1,62 @@
 @import "tailwindcss";
-body{
-    background: linear-gradient(to right, black, #27272a, rgb(94, 93, 93));
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: #f8fafc;
+    
+    /* Rich radial dark theme gradient with subtle Pokédex blue/slate vibes */
+    background: radial-gradient(
+        circle at 50% 0%, 
+        rgba(30, 41, 59, 0.8) 0%, 
+        rgba(15, 23, 42, 1) 50%, 
+        rgba(2, 6, 23, 1) 100%
+      ),
+      fixed #020617;
+    
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  /* Custom Smooth Scrollbar with Pokémon Yellow accent */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #090d16;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 9999px;
+    border: 2px solid #090d16;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #facc15; /* Pokémon Yellow hover */
+  }
+}
+
+/* Subtle background animations */
+@keyframes ambientGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
+
+.animate-ambient-glow {
+  animation: ambientGlow 8s ease-in-out infinite;
 }
